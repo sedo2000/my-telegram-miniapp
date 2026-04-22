@@ -4,7 +4,7 @@ from telebot import types
 # ضع التوكن الخاص بك هنا من BotFather
 API_TOKEN = '8458116007:AAHU-Ch47PVdOJOH8LmzPL_UXxAwQrTHUlQ'
 # ضع رابط موقعك بعد رفعه على فيرسل هنا
-MINI_APP_URL = 'https://your-project-name.vercel.app'
+MINI_APP_URL = 'https://my-telegram-miniapp.vercel.app/'
 
 bot = telebot.TeleBot(API_TOKEN)
 
