@@ -17,20 +17,23 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var update tgbotapi.Update
-	json.NewDecoder(r.Body).Decode(&update)
+	if err := json.NewDecoder(r.Body).Decode(&update); err != nil {
+		return
+	}
 
 	if update.Message != nil && update.Message.Text == "/start" {
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Welcome to TinyTune! 🚀")
 		
-		// الطريقة اليدوية لإنشاء لوحة المفاتيح لتجنب أخطاء الإصدارات
-		// الرابط هو رابط الـ Frontend الخاص بك على فيرسل
-		url := "https://" + r.Host + "/" 
+		// بناء هيكل الزر يدوياً كـ Map لضمان نجاح الـ Build
+		// r.Host سيجلب رابط مشروعك على فيرسل تلقائياً
+		webAppURL := "https://" + r.Host + "/"
 
-		// إنشاء زر WebApp باستخدام ميزة "Map" لضمان عدم حدوث خطأ أثناء الـ Build
+		// إنشاء الـ Keyboard باستخدام Raw JSON
+		// هذه الطريقة تتخطى خطأ "undefined: WebAppInfo" نهائياً
 		button := map[string]interface{}{
-			"text": "🎵 Open TinyTune",
+			"text": "🎵 Open TinyTune Visualizer",
 			"web_app": map[string]string{
-				"url": url,
+				"url": webAppURL,
 			},
 		}
 
@@ -40,8 +43,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			},
 		}
 
-		data, _ := json.Marshal(keyboard)
-		msg.ReplyMarkup = json.RawMessage(data)
+		keyboardBytes, _ := json.Marshal(keyboard)
+		msg.ReplyMarkup = json.RawMessage(keyboardBytes)
 
 		bot.Send(msg)
 	}
