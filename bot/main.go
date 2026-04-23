@@ -2,17 +2,18 @@ package main
 
 import (
 	"log"
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 func main() {
-	// 1. ضع توكن البوت الخاص بك هنا
+	// 1. ضع التوكن الخاص بك هنا
 	bot, err := tgbotapi.NewBotAPI("8458116007:AAHU-Ch47PVdOJOH8LmzPL_UXxAwQrTHUlQ")
 	if err != nil {
 		log.Panic(err)
 	}
 
-	log.Printf("TinyTune Bot Started: %s", bot.Self.UserName)
+	bot.Debug = true
+	log.Printf("TinyTune Bot is LIVE: %s", bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
@@ -24,19 +25,18 @@ func main() {
 		}
 
 		if update.Message.Command() == "start" {
-			// 2. رابط الـ Mini App (رابط Vercel الخاص بك)
-			webApp := &tgbotapi.WebAppInfo{
-				URL: "https://my-telegram-miniapp.vercel.app/",
-			}
+			// 2. رابط الـ Mini App الخاص بك (الذي حصلت عليه من BotFather)
+			// الرابط يكون بهذا الشكل: https://t.me/TinyTuneBot/visuals
+			miniAppURL := "http://t.me/TinyTuneBot/visuals"
 
-			// إنشاء زر الـ Mini App
-			button := tgbotapi.NewInlineKeyboardButtonWebApp("🎵 Launch TinyTune Visuals", *webApp)
+			// إنشاء زر رابط عادي (هذا سيعمل حتماً)
+			button := tgbotapi.NewInlineKeyboardButtonURL("🎵 Launch TinyTune Visuals", miniAppURL)
 			
 			keyboard := tgbotapi.NewInlineKeyboardMarkup(
 				tgbotapi.NewInlineKeyboardRow(button),
 			)
 
-			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Welcome to **TinyTune**! 🚀\n\nExperience high-end visuals and music.")
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Welcome to **TinyTune**! 🚀\n\nClick below to start the experience.")
 			msg.ParseMode = "Markdown"
 			msg.ReplyMarkup = keyboard
 
