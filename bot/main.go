@@ -6,14 +6,14 @@ import (
 )
 
 func main() {
-	// 1. ضع التوكن الخاص بك هنا
+	// 1. ضع التوكن الخاص بك هنا بدلاً من YOUR_BOT_TOKEN
 	bot, err := tgbotapi.NewBotAPI("8458116007:AAHU-Ch47PVdOJOH8LmzPL_UXxAwQrTHUlQ")
 	if err != nil {
 		log.Panic(err)
 	}
 
 	bot.Debug = true
-	log.Printf("TinyTune is LIVE on: %s", bot.Self.UserName)
+	log.Printf("TinyTune is LIVE: %s", bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
@@ -25,18 +25,18 @@ func main() {
 		}
 
 		if update.Message.Command() == "start" {
-			// استخدم رابط الـ Mini App الرسمي الذي حصلت عليه من BotFather
-			// أو رابط Vercel مباشرة
+			// استخدم الرابط الرسمي للـ Mini App الخاص بك
+			// هذا الرابط سيفتح الـ Web App تلقائياً داخل تلجرام
 			targetURL := "http://t.me/TinyTuneBot/visuals"
 
-			// إنشاء زر رابط عادي - هذا السطر مستحيل يعطيك خطأ
+			// إنشاء زر رابط تقليدي - مضمون العمل 100%
 			button := tgbotapi.NewInlineKeyboardButtonURL("🎵 Open TinyTune Visuals", targetURL)
 			
 			keyboard := tgbotapi.NewInlineKeyboardMarkup(
 				tgbotapi.NewInlineKeyboardRow(button),
 			)
 
-			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Welcome to **TinyTune**! 🚀\n\nClick the button to start.")
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Welcome to **TinyTune**! 🚀\n\nClick the button below to start the experience.")
 			msg.ParseMode = "Markdown"
 			msg.ReplyMarkup = keyboard
 
