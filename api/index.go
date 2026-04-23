@@ -10,26 +10,31 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
+	// جلب التوكن من Environment Variables في فيرسل
 	token := os.Getenv("TELEGRAM_BOT_TOKEN")
 	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
+		// إذا كان هناك خطأ في التوكن سيظهر هنا في الـ Logs
+		fmt.Fprintf(w, "Bot Error: %v", err)
 		return
 	}
 
 	var update tgbotapi.Update
+	// استقبال البيانات من تلجرام
 	if err := json.NewDecoder(r.Body).Decode(&update); err != nil {
+		// عند فتح الرابط من المتصفح يدوياً سيصل هنا لأنه لا توجد بيانات JSON
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "OK - TinyTune Bot is Listening! 🚀")
 		return
 	}
 
 	if update.Message != nil && update.Message.Text == "/start" {
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Welcome to TinyTune! 🚀")
+		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Welcome to TinyTune! 🚀\nYour personal visualizer is ready.")
 		
-		// بناء هيكل الزر يدوياً كـ Map لضمان نجاح الـ Build
-		// r.Host سيجلب رابط مشروعك على فيرسل تلقائياً
+		// بناء رابط الـ WebApp ديناميكياً
 		webAppURL := "https://" + r.Host + "/"
 
-		// إنشاء الـ Keyboard باستخدام Raw JSON
-		// هذه الطريقة تتخطى خطأ "undefined: WebAppInfo" نهائياً
+		// استخدام Raw JSON لتجنب مشاكل إصدار المكتبة في فيرسل
 		button := map[string]interface{}{
 			"text": "🎵 Open TinyTune Visualizer",
 			"web_app": map[string]string{
@@ -50,5 +55,4 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "OK")
 }
