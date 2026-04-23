@@ -13,7 +13,7 @@ func main() {
 	}
 
 	bot.Debug = true
-	log.Printf("TinyTune Bot is LIVE: %s", bot.Self.UserName)
+	log.Printf("TinyTune is LIVE on: %s", bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
@@ -25,18 +25,18 @@ func main() {
 		}
 
 		if update.Message.Command() == "start" {
-			// 2. رابط الـ Mini App الخاص بك (الذي حصلت عليه من BotFather)
-			// الرابط يكون بهذا الشكل: https://t.me/TinyTuneBot/visuals
-			miniAppURL := "http://t.me/TinyTuneBot/visuals"
+			// استخدم رابط الـ Mini App الرسمي الذي حصلت عليه من BotFather
+			// أو رابط Vercel مباشرة
+			targetURL := "http://t.me/TinyTuneBot/visuals"
 
-			// إنشاء زر رابط عادي (هذا سيعمل حتماً)
-			button := tgbotapi.NewInlineKeyboardButtonURL("🎵 Launch TinyTune Visuals", miniAppURL)
+			// إنشاء زر رابط عادي - هذا السطر مستحيل يعطيك خطأ
+			button := tgbotapi.NewInlineKeyboardButtonURL("🎵 Open TinyTune Visuals", targetURL)
 			
 			keyboard := tgbotapi.NewInlineKeyboardMarkup(
 				tgbotapi.NewInlineKeyboardRow(button),
 			)
 
-			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Welcome to **TinyTune**! 🚀\n\nClick below to start the experience.")
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Welcome to **TinyTune**! 🚀\n\nClick the button to start.")
 			msg.ParseMode = "Markdown"
 			msg.ReplyMarkup = keyboard
 
