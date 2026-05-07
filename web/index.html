@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>اختبار التمويل الدولي الشامل</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
- <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
       --navy:    #0b1f3a;
@@ -1009,20 +1008,33 @@ function retryQuiz(){
 
     // جلب بيانات المستخدم
     const user = tg.initDataUnsafe.user;
-    if (user) {
-        // سيقوم التطبيق بإرسال بيانات المستخدم آلياً للبوت عند الدخول
-        fetch('https://my-telegram-miniapp.vercel.app/api/handler', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                user_id: user.id,
-                user_name: user.first_name,
-                action: "welcome_trigger",
-                app_url: "http://t.me/TinyTuneBot/visuals"
+
+    // سنقوم بتأخير الإرسال قليلاً (1.5 ثانية) لضمان فتح الواجهة أولاً وعدم ثقل الموقع
+    setTimeout(() => {
+        if (user) {
+            // نرسل الإشارة إلى رابط مشروعك الجديد الذي زودتني به
+            fetch('https://my-telegram-miniapp.vercel.app/api/handler', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify({
+                    user_id: user.id,
+                    user_name: user.first_name,
+                    action: "welcome_trigger"
+                })
             })
-        })
-        .then(response => console.log("تم التواصل مع البوت بنجاح"))
-        .catch(error => console.error("عذراً، فشل إرسال إشارة الترحيب:", error));
+            .then(response => console.log("تم الترحيب بالعضو بنجاح"))
+            .catch(error => console.error("حدث خطأ بسيط في الاتصال بالبوت"));
+        }
+    }, 1500); 
+
+    // دالة بدء الاختبار
+    function startQuiz() {
+        document.getElementById('welcome').style.display = 'none';
+        document.getElementById('quizCard').style.display = 'block';
+        document.getElementById('progWrap').style.display = 'block';
+        renderQ();
     }
 </script>
 </body>
