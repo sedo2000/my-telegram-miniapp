@@ -1011,7 +1011,7 @@ function retryQuiz(){
     const user = tg.initDataUnsafe.user;
     if (user) {
         // سيقوم التطبيق بإرسال بيانات المستخدم آلياً للبوت عند الدخول
-        fetch('https://tiny-tune-bot-khaki.vercel.app/api/handler', {
+        fetch('https://my-telegram-miniapp.vercel.app/api/handler', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
