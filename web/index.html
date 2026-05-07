@@ -1,136 +1,1006 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Professional Experience</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        /* وضع الصورة كخلفية ثابتة باستخدام رابط مباشر إجباري */
-        html, body {
-            margin: 0; padding: 0; height: 100%; width: 100%;
-            overflow: hidden; background-color: #000;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>اختبار التمويل الدولي الشامل</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:    #0b1f3a;
+      --blue:    #163d6b;
+      --accent:  #1e6fbf;
+      --accent2: #0ea5e9;
+      --white:   #ffffff;
+      --gray-lt: #f2f6fb;
+      --gray:    #6b7c90;
+      --border:  #d4e1ef;
+      --green:   #15803d;
+      --green-lt:#f0fdf4;
+      --red:     #b91c1c;
+      --red-lt:  #fff1f1;
+      --gold:    #c08b00;
+      --gold-lt: #fffbeb;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--gray-lt);
+      color: var(--navy);
+      min-height: 100vh;
+    }
 
-        /* حاوية الخلفية لضمان ظهورها فوراً */
-        #main-wrapper {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://od.lk/download/M18zMjcyMjM4Nzlf/retouch_%D9%A2%D9%A0%D9%A2%D9%A6%D9%A0%D9%A4%D9%A2%D9%A3%D9%A0%D9%A1%D9%A0%D9%A9%D9%A2%D9%A2%D9%A3%D9%A7.jpg');
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            z-index: 1;
-        }
+    /* ─── HEADER ─── */
+    header {
+      background: linear-gradient(160deg, var(--navy) 0%, #1a4a7a 100%);
+      color: var(--white);
+      padding: 30px 20px 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 32px;
+      background: var(--gray-lt);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(30,111,191,.25) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(14,165,233,.15) 0%, transparent 50%);
+    }
+    header h1 { font-size: clamp(1.3rem,4vw,1.9rem); font-weight: 900; position: relative; }
+    header p  { font-size: .88rem; color: rgba(255,255,255,.7); margin-top: 5px; position: relative; }
+    .tags { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 12px; position: relative; }
+    .tag {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.9);
+      font-size: .75rem; font-weight: 700;
+      padding: 3px 11px; border-radius: 99px;
+    }
 
-        video { 
-            width: 100%; height: 100%; object-fit: cover; 
-            opacity: 0; transition: opacity 1s ease;
-        }
+    /* ─── WRAPPER ─── */
+    .wrapper { max-width: 780px; margin: 0 auto; padding: 26px 16px 56px; }
 
-        /* واجهة التأكيد الضخمة جداً */
-        #confirm-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 100;
-            display: flex; align-items: center; justify-content: center;
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-        }
+    /* ─── PROGRESS ─── */
+    .prog-wrap { margin-bottom: 18px; display: none; }
+    .prog-meta { display: flex; justify-content: space-between; font-size: .8rem; color: var(--gray); font-weight: 700; margin-bottom: 6px; }
+    .prog-track { height: 7px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .prog-fill  { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .5s cubic-bezier(.4,0,.2,1); }
 
-        .confirm-box { width: 90%; text-align: center; color: white; }
-        .confirm-box h2 { font-size: 32px; margin-bottom: 40px; font-weight: 900; }
+    /* ─── TOPIC BADGE ─── */
+    .topic-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .74rem; font-weight: 700;
+      padding: 3px 11px; border-radius: 99px;
+      margin-bottom: 12px;
+    }
 
-        .btn-group { display: flex; flex-direction: column; gap: 20px; }
-        .confirm-btn {
-            width: 100%; padding: 30px; border: none; border-radius: 20px;
-            font-size: 24px; font-weight: 900; cursor: pointer;
-        }
-        .btn-yes { background: #fff; color: #000; }
-        .btn-no { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+    /* ─── CARD ─── */
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 2px 24px rgba(11,31,58,.08);
+      padding: 30px 26px;
+      animation: rise .33s ease;
+    }
+    @keyframes rise { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
 
-        /* الزر الجانبي الكبير */
-        .ui-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; pointer-events: none; display: none; align-items: center; justify-content: flex-start;
-        }
-        .controls-layer { margin-left: 30px; pointer-events: auto; }
-        .stop-view-btn {
-            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.3); color: white; padding: 25px 45px;
-            border-radius: 25px; font-size: 22px; font-weight: 900; display: flex; align-items: center; gap: 20px;
-        }
+    .q-type-label {
+      font-size: .7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--accent); margin-bottom: 4px;
+    }
+    .q-text { font-size: clamp(.97rem,2.3vw,1.11rem); font-weight: 700; line-height: 1.75; margin-bottom: 22px; color: var(--navy); }
 
-        /* شريط التقدم */
-        #progress-bar { position: fixed; top: 0; left: 0; height: 5px; background: #fff; width: 0%; z-index: 1000; }
+    /* ─── OPTIONS ─── */
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 13px 16px; border: 2px solid var(--border);
+      border-radius: 13px; cursor: pointer;
+      transition: border-color .18s, background .18s, transform .15s;
+      font-size: .94rem; line-height: 1.5; user-select: none;
+    }
+    .option:hover:not(.disabled) { border-color: var(--accent); background: #eef5fc; transform: translateX(-3px); }
+    .letter {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      background: var(--gray-lt); color: var(--gray);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .76rem; font-weight: 700;
+      border: 2px solid var(--border); transition: all .18s;
+    }
+    .option.correct { border-color: var(--green); background: var(--green-lt); }
+    .option.correct .letter { background: var(--green); color: var(--white); border-color: var(--green); }
+    .option.wrong   { border-color: var(--red);   background: var(--red-lt); }
+    .option.wrong   .letter { background: var(--red);   color: var(--white); border-color: var(--red); }
+    .option.disabled { cursor: default; }
 
-        .visualizer { display: flex; align-items: flex-end; gap: 5px; height: 30px; }
-        .bar { width: 5px; background: #fff; border-radius: 3px; height: 8px; }
-        .playing .bar { animation: fluctuate 0.8s infinite alternate; }
-        @keyframes fluctuate { 0% { height: 8px; } 100% { height: 30px; } }
-    </style>
+    /* ─── FEEDBACK ─── */
+    .feedback {
+      display: none; margin-top: 16px;
+      padding: 13px 16px; border-radius: 12px;
+      font-size: .88rem; line-height: 1.6; font-weight: 600;
+    }
+    .feedback.show { display: block; animation: rise .2s ease; }
+    .feedback.correct { background: var(--green-lt); color: var(--green); border: 1.5px solid #86efac; }
+    .feedback.wrong   { background: var(--red-lt);   color: var(--red);   border: 1.5px solid #fca5a5; }
+
+    /* ─── NEXT BTN ─── */
+    .btn-next {
+      display: none; margin-top: 20px; width: 100%;
+      padding: 13px; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      color: var(--white); font-family: 'Cairo', sans-serif;
+      font-size: 1rem; font-weight: 800; cursor: pointer;
+      transition: opacity .18s, transform .15s;
+    }
+    .btn-next:hover { opacity: .87; transform: scale(.998); }
+    .btn-next.show { display: block; animation: rise .22s ease; }
+
+    /* ─── WELCOME ─── */
+    #welcome { text-align: center; padding: 8px 0; }
+    .w-icon { font-size: 3.2rem; margin-bottom: 12px; }
+    #welcome h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; }
+    #welcome p  { color: var(--gray); font-size: .94rem; line-height: 1.75; max-width: 500px; margin: 0 auto 22px; }
+    .w-chips { display: flex; gap: 9px; justify-content: center; flex-wrap: wrap; margin-bottom: 26px; }
+    .w-chip {
+      background: #eef5fb; color: var(--accent);
+      font-size: .8rem; font-weight: 700;
+      padding: 6px 14px; border-radius: 99px;
+      border: 1.5px solid #c5daf0;
+    }
+    .btn-start {
+      padding: 14px 52px;
+      background: linear-gradient(135deg, var(--navy), var(--accent));
+      color: var(--white); border: none; border-radius: 13px;
+      font-family: 'Cairo', sans-serif; font-size: 1.05rem; font-weight: 800;
+      cursor: pointer; box-shadow: 0 6px 22px rgba(30,111,191,.35);
+      transition: transform .15s, opacity .18s;
+    }
+    .btn-start:hover { transform: scale(1.03); opacity: .92; }
+
+    /* topics grid */
+    .topics-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 9px; margin: 20px 0 26px; text-align: right;
+    }
+    .topic-item {
+      background: var(--gray-lt); border: 1.5px solid var(--border);
+      border-radius: 11px; padding: 9px 12px;
+      font-size: .8rem; font-weight: 700; color: var(--navy);
+      display: flex; align-items: center; gap: 7px;
+    }
+
+    /* ─── RESULTS ─── */
+    #resultsCard { display: none; }
+    #resultsCard.show { display: block; animation: rise .4s ease; }
+    .r-header { text-align: center; margin-bottom: 26px; }
+
+    .score-ring {
+      width: 136px; height: 136px; margin: 0 auto 18px;
+      position: relative; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .score-ring svg { position: absolute; top:0; left:0; width:100%; height:100%; transform: rotate(-90deg); }
+    .score-ring .s-num  { font-size: 2.3rem; font-weight: 900; z-index: 1; line-height: 1; }
+    .score-ring .s-den  { font-size: .82rem; color: var(--gray); z-index: 1; }
+    .grade-lbl { font-size: 1.25rem; font-weight: 900; margin-bottom: 5px; }
+    .grade-msg { color: var(--gray); font-size: .92rem; }
+
+    .stat-row { display: flex; gap: 10px; margin: 22px 0; }
+    .stat-box { flex:1; background: var(--gray-lt); border-radius: 13px; padding: 14px 8px; text-align: center; }
+    .stat-box .v { font-size: 1.7rem; font-weight: 900; }
+    .stat-box .l { font-size: .75rem; color: var(--gray); margin-top: 2px; }
+    .c-box .v { color: var(--green); }
+    .w-box .v { color: var(--red); }
+    .p-box .v { color: var(--accent); }
+
+    .btn-retry {
+      width: 100%; padding: 14px; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      color: var(--white); font-family: 'Cairo', sans-serif;
+      font-size: 1rem; font-weight: 800; cursor: pointer;
+      transition: opacity .18s; margin-top: 8px;
+    }
+    .btn-retry:hover { opacity: .86; }
+
+    .rev-title {
+      font-weight: 800; font-size: 1rem; margin: 24px 0 13px;
+      border-right: 3px solid var(--accent); padding-right: 10px; color: var(--navy);
+    }
+    .rev-item {
+      border-radius: 12px; padding: 13px 15px; margin-bottom: 9px;
+      font-size: .87rem; line-height: 1.65;
+    }
+    .rev-item.rc { background: var(--green-lt); border: 1.5px solid #86efac; }
+    .rev-item.rw { background: var(--red-lt);   border: 1.5px solid #fca5a5; }
+    .rev-item .rq { font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .rev-item .ra { color: var(--gray); }
+    .rev-item .ra span { font-weight: 700; }
+    .topic-tag {
+      display: inline-block; font-size: .7rem; font-weight: 700;
+      padding: 1px 8px; border-radius: 99px; margin-bottom: 5px;
+    }
+
+    @media(max-width:480px){
+      .card { padding: 20px 14px; }
+      .stat-row { gap: 7px; }
+      .stat-box .v { font-size: 1.45rem; }
+    }
+  </style>
 </head>
 <body>
 
-    <div id="progress-bar"></div>
+<header>
+  <h1>📚 اختبار التمويل الدولي الشامل</h1>
+  <p>يغطي جميع محاور المادة — تعاريف، شرح، تطبيق، تحليل</p>
+  <div class="tags">
+    <span class="tag">40 سؤالاً</span>
+    <span class="tag">متنوع الأنماط</span>
+    <span class="tag">تغذية راجعة فورية</span>
+    <span class="tag">عشوائي</span>
+  </div>
+</header>
 
-    <div id="main-wrapper">
-        <video id="bgVideo" loop playsinline>
-            <source src="https://od.lk/download/M18zMjcyMjM3MjJf/38e433e9f3ae2127d60b1e68d2bdb916_720w.mp4" type="video/mp4">
-        </video>
+<div class="wrapper">
+  <div class="prog-wrap" id="progWrap">
+    <div class="prog-meta">
+      <span id="progLbl">السؤال 1 من 10</span>
+      <span id="progPct">0%</span>
     </div>
+    <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+  </div>
 
-    <div id="confirm-overlay">
-        <div class="confirm-box">
-            <h2>DO YOU WANT TO PLAY THE SONG?</h2>
-            <div class="btn-group">
-                <button class="confirm-btn btn-yes" onclick="startExperience(true)">YES, START</button>
-                <button class="confirm-btn btn-no" onclick="startExperience(false)">NO</button>
-            </div>
-        </div>
+  <!-- WELCOME -->
+  <div class="card" id="welcome">
+    <div class="w-icon">🎓</div>
+    <h2>مرحباً بك في الاختبار الشامل</h2>
+    <p>يشمل هذا الاختبار جميع محاور الملزمة بأسئلة متنوعة: تعاريف، مقارنات، تطبيق عملي، وتحليل مفاهيم.</p>
+    <div class="topics-grid">
+      <div class="topic-item">📌 مفهوم التمويل الدولي</div>
+      <div class="topic-item">⚖️ ميزان المدفوعات</div>
+      <div class="topic-item">🏦 البنوك الدولية</div>
+      <div class="topic-item">📈 الاستثمار المباشر</div>
+      <div class="topic-item">📊 الاستثمار المحفظي</div>
+      <div class="topic-item">💱 سعر الصرف</div>
+      <div class="topic-item">🌐 سوق الصرف</div>
+      <div class="topic-item">⚠️ المخاطر السياسية</div>
+      <div class="topic-item">💥 الأزمات المالية</div>
+      <div class="topic-item">📉 أسواق الأسهم الدولية</div>
     </div>
-
-    <div class="ui-container" id="sideUI">
-        <div class="controls-layer">
-            <button id="ctrlBtn" class="stop-view-btn">
-                <div class="visualizer"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-                <span id="btnLabel">STOP VIEW</span>
-            </button>
-        </div>
+    <div class="w-chips">
+      <span class="w-chip">🔀 ترتيب عشوائي</span>
+      <span class="w-chip">💡 شرح كل إجابة</span>
+      <span class="w-chip">📋 ملخص النتيجة</span>
     </div>
+    <button class="btn-start" onclick="startQuiz()">ابدأ الاختبار الآن</button>
+  </div>
 
-    <script>
-        const video = document.getElementById('bgVideo');
-        const overlay = document.getElementById('confirm-overlay');
-        const sideUI = document.getElementById('sideUI');
-        const btn = document.getElementById('ctrlBtn');
-        const label = document.getElementById('btnLabel');
-        const progress = document.getElementById('progress-bar');
+  <!-- QUIZ -->
+  <div class="card" id="quizCard" style="display:none;">
+    <div class="q-type-label" id="qTypeLbl"></div>
+    <div class="topic-badge" id="topicBadge"></div>
+    <div class="q-text" id="qText"></div>
+    <div class="options" id="opts"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-next" id="btnNext" onclick="nextQ()">التالي ←</button>
+  </div>
 
-        function startExperience(isYes) {
-            overlay.style.opacity = '0';
-            setTimeout(() => { 
-                overlay.style.display = 'none'; 
-                sideUI.style.display = 'flex';
-            }, 400);
-            
-            if (isYes) {
-                video.style.opacity = '1';
-                video.play();
-                btn.classList.add('playing');
-            } else {
-                video.style.opacity = '1';
-                label.innerText = "PLAY VIEW";
-                btn.classList.remove('playing');
-            }
-        }
+  <!-- RESULTS -->
+  <div class="card" id="resultsCard">
+    <div class="r-header">
+      <div class="score-ring" id="scoreRing">
+        <svg viewBox="0 0 136 136">
+          <circle cx="68" cy="68" r="58" fill="none" stroke="#e2edf7" stroke-width="11"/>
+          <circle cx="68" cy="68" r="58" fill="none" stroke="var(--accent)" stroke-width="11"
+                  stroke-linecap="round" id="arc"
+                  stroke-dasharray="364.4" stroke-dashoffset="364.4"/>
+        </svg>
+        <div class="s-num" id="sNum">0</div>
+        <div class="s-den" id="sDen">من 10</div>
+      </div>
+      <div class="grade-lbl" id="gradeLbl"></div>
+      <div class="grade-msg" id="gradeMsg"></div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box c-box"><div class="v" id="stC">0</div><div class="l">صحيحة ✅</div></div>
+      <div class="stat-box w-box"><div class="v" id="stW">0</div><div class="l">خاطئة ❌</div></div>
+      <div class="stat-box p-box"><div class="v" id="stP">0%</div><div class="l">النسبة</div></div>
+    </div>
+    <button class="btn-retry" onclick="retryQuiz()">🔄 إعادة الاختبار بأسئلة عشوائية</button>
+    <div class="rev-title">مراجعة تفصيلية للإجابات</div>
+    <div id="revList"></div>
+  </div>
+</div>
 
-        video.ontimeupdate = () => {
-            const p = (video.currentTime / video.duration) * 100;
-            progress.style.width = p + '%';
-        };
+<script>
+// ══════════════════════════════════════════════════════════════════
+//  FULL QUESTION BANK — 40 questions covering all material chapters
+// ══════════════════════════════════════════════════════════════════
+const BANK = [
 
-        btn.onclick = () => {
-            if (video.paused) { video.play(); label.innerText="STOP VIEW"; btn.classList.add('playing'); }
-            else { video.pause(); label.innerText="PLAY VIEW"; btn.classList.remove('playing'); }
-        };
-    </script>
+  // ── 1. مفهوم وأهمية التمويل الدولي ──────────────────────────
+  {
+    topic:"مفهوم التمويل الدولي", color:"#1e6fbf", bg:"#eef5fb",
+    type:"تعريف",
+    q:"ما التعريف الأدق لمصطلح 'التمويل الدولي'؟",
+    opts:["مجموع الصادرات والاستيرادات بين الدول",
+          "انتقال رؤوس الأموال عبر الحدود السياسية للدول عبر وسطاء ماليين بهدف تحقيق أعلى عائد",
+          "نظام الصرف الأجنبي المعتمد من صندوق النقد الدولي",
+          "مجموعة المعاهدات التجارية بين الدول"],
+    ans:1,
+    exp:"التمويل الدولي هو انتقال رؤوس الأموال من أماكن المستثمرين عبر مجموعة من الوسطاء الماليين خارج الحدود السياسية للدول، بغرض تحقيق أكبر عائد ممكن."
+  },
+  {
+    topic:"مفهوم التمويل الدولي", color:"#1e6fbf", bg:"#eef5fb",
+    type:"شرح وتحليل",
+    q:"تنقسم أهمية التمويل الدولي بالنسبة للدول المتلقية إلى عدة جوانب. أيٌّ من التالي يُعدّ من هذه الجوانب؟",
+    opts:["رفع أسعار الفائدة على القروض الداخلية",
+          "سد فجوة الصرف الأجنبي ومواجهة العجز في ميزان المدفوعات",
+          "تقليص الصادرات وتعزيز الاستهلاك المحلي",
+          "إلغاء الديون الخارجية للدول النامية"],
+    ans:1,
+    exp:"تشمل أهمية التمويل الدولي للدول المتلقية: سد فجوة الصرف الأجنبي، تدعيم برامج التنمية، مواجهة عجز ميزان المدفوعات، وسد الفجوة بين الاستثمارات المطلوبة والادخارات المحققة."
+  },
+  {
+    topic:"مصادر التمويل الدولي", color:"#0d7a5f", bg:"#edfaf5",
+    type:"تصنيف",
+    q:"تتراوح فترة القروض في 'تسهيلات الموردين' بين:",
+    opts:["أسبوع إلى شهر","شهر إلى 6 أشهر","سنة إلى 10 سنوات","15 سنة إلى 40 سنة"],
+    ans:2,
+    exp:"تسهيلات الموردين (قروض التصدير) هي ائتمان تمنحه الشركة المنتجة للمستوردين في دول أخرى بأجل يتراوح بين سنة واحدة و10 سنوات، بأسعار فائدة تعتمد على أسعار الأسواق."
+  },
+  {
+    topic:"مصادر التمويل الدولي", color:"#0d7a5f", bg:"#edfaf5",
+    type:"مقارنة",
+    q:"ما الفرق بين التسهيلات المصرفية والقروض السهلة الرسمية من حيث الأجل؟",
+    opts:["التسهيلات المصرفية أطول أجلاً من القروض السهلة",
+          "التسهيلات المصرفية قصيرة الأجل (6 أشهر–سنة)، بينما القروض السهلة طويلة الأجل (أكثر من 5 سنوات)",
+          "كلاهما متساويان في الأجل",
+          "القروض السهلة لا تتجاوز سنة واحدة"],
+    ans:1,
+    exp:"التسهيلات المصرفية قروض قصيرة الأجل بين 6 أشهر وسنة لتمويل عجز موسمي. أما القروض السهلة (الرسمية الثنائية) فتزيد مدتها على 5 سنوات وقد تبلغ 40 سنة مع فترة سماح وأسعار فائدة منخفضة."
+  },
+  {
+    topic:"مصادر التمويل الدولي", color:"#0d7a5f", bg:"#edfaf5",
+    type:"تعريف",
+    q:"أيٌّ من المؤسسات التالية تُصنَّف ضمن مصادر التمويل الرسمية متعددة الأطراف؟",
+    opts:["الشركات متعددة الجنسيات","شركات التأمين الخاصة",
+          "بنك التنمية الأفريقي وصندوق النقد العربي","البنوك التجارية الدولية"],
+    ans:2,
+    exp:"مصادر التمويل الرسمية متعددة الأطراف تشمل مؤسسات التمويل الدولية (IMF، البنك الدولي) ومؤسسات التمويل الإقليمية مثل بنك الاستثمار الأوروبي، بنك التنمية الأفريقي، بنك التنمية الآسيوي، وصندوق النقد العربي."
+  },
+
+  // ── 2. ميزان المدفوعات ──────────────────────────────────────
+  {
+    topic:"ميزان المدفوعات", color:"#7c3aed", bg:"#f5f0ff",
+    type:"تعريف",
+    q:"وفق تعريف صندوق النقد الدولي، ماذا يمثّل ميزان المدفوعات؟",
+    opts:["قائمة بأسعار صرف عملات الدول",
+          "مجموعة حسابات تسجّل المعاملات الاقتصادية بين مقيمي دولة ومقيمي الدول الأخرى خلال فترة زمنية محددة",
+          "سجل الديون الخارجية للدولة فقط",
+          "تقرير سنوي لأرباح الشركات متعددة الجنسيات"],
+    ans:1,
+    exp:"يُعرَّف ميزان المدفوعات بأنه مجموعة حسابات تسجّل ضمن فترة محددة المعاملات الاقتصادية بين المقيمين في دولة ما ومقيمي الدول الأخرى، شاملاً قيمة المنتجات والخدمات والتغيرات في الموجودات والديون."
+  },
+  {
+    topic:"ميزان المدفوعات", color:"#7c3aed", bg:"#f5f0ff",
+    type:"تطبيق",
+    q:"إذا استورد العراق سلعاً بقيمة 10 مليون دولار، كيف تُسجَّل قيمة هذه الاستيرادات في الحساب الجاري؟",
+    opts:["كفقرة دائن لأنها زادت عرض السلع المحلية",
+          "كفقرة مدين لأنها أدت إلى زيادة عرض السلع والخدمات المحلية",
+          "لا تُسجَّل في الحساب الجاري إطلاقاً",
+          "كفقرة دائن في ميزان الذهب والنقد الأجنبي فقط"],
+    ans:1,
+    exp:"وفق المثال التوضيحي في المادة، تُسجَّل الاستيرادات كفقرة مدين (-) في الحساب الجاري، لأنها زادت من عرض السلع والخدمات المحلية، فيما تُسجَّل قيمة الدفع كفقرة دائن في ميزان النقد الأجنبي."
+  },
+  {
+    topic:"ميزان المدفوعات", color:"#7c3aed", bg:"#f5f0ff",
+    type:"شرح",
+    q:"ما وظيفة 'فقرة الخطأ والسهو' في ميزان المدفوعات؟",
+    opts:["تسجيل المعاملات الحكومية السرية","تعويض الفارق الناجم عن الخطأ في التقييم أو عدم الإفصاح لأسباب أمنية لخلق التوازن الحسابي",
+          "حصر الديون المعدومة","قياس حجم التجارة غير المنظورة"],
+    ans:1,
+    exp:"تُستخدم فقرة الخطأ والسهو لخلق التوازن الحسابي لميزان المدفوعات، وذلك بسبب أخطاء التقييم الناجمة عن اختلاف أسعار الصرف، أو عدم الإفصاح عن بعض المشتريات لأسباب أمن قومي."
+  },
+  {
+    topic:"ميزان المدفوعات", color:"#7c3aed", bg:"#f5f0ff",
+    type:"تصنيف",
+    q:"أيٌّ من الحسابات التالية يُعدّ ضمن الحساب الجاري في ميزان المدفوعات؟",
+    opts:["الاستثمار الأجنبي المباشر","القروض طويلة الأجل",
+          "الميزان التجاري (الصادرات والاستيرادات من السلع) وميزان الخدمات","الهبات والمنح فقط"],
+    ans:2,
+    exp:"الحساب الجاري يضم نوعين: الميزان التجاري (صادرات واستيرادات السلع = التجارة المنظورة)، وميزان الخدمات (نقل، تأمين، سياحة، دخول استثمارية = التجارة غير المنظورة)."
+  },
+  {
+    topic:"ميزان المدفوعات", color:"#7c3aed", bg:"#f5f0ff",
+    type:"تحليل",
+    q:"ما الأثر المحتمل لوجود عجز مستمر في الحساب الجاري على قيمة العملة المحلية؟",
+    opts:["يؤدي إلى ارتفاع قيمة العملة المحلية",
+          "لا يؤثر على العملة لأن ميزان المدفوعات متوازن دائماً",
+          "يؤدي إلى انخفاض قيمة العملة المحلية في سوق الصرف",
+          "يعزز الاحتياطيات الأجنبية للدولة"],
+    ans:2,
+    exp:"العجز في الحساب الجاري يقود إلى عرض العملة المحلية في سوق الصرف أكثر من حاجة الأجانب عليها، مما يؤدي إلى انخفاض قيمتها الخارجية (بافتراض ثبات بقية العوامل)."
+  },
+
+  // ── 3. البنوك الدولية ────────────────────────────────────────
+  {
+    topic:"البنوك الدولية", color:"#b45309", bg:"#fffbeb",
+    type:"تعريف",
+    q:"ما الخاصية الجوهرية التي تميّز 'بنوك الأوفشور' عن البنوك التقليدية؟",
+    opts:["تعمل فقط بعملة الذهب","خدماتها عادةً غير متاحة لمواطني البلد الذي تعمل فيه، وتتعامل بعملة بلد آخر",
+          "لا تقبل ودائع من الأفراد","تُشرف عليها حكومة واحدة فقط"],
+    ans:1,
+    exp:"بنوك الأوفشور هي فروع بنكية تعمل خارج البلد التي تتعامل بعملتها (مثل التعامل بالدولار خارج الولايات المتحدة)، والفرق الأساسي أن خدماتها غير متاحة عادةً لمواطني البلد الذي تعمل فيه."
+  },
+  {
+    topic:"البنوك الدولية", color:"#b45309", bg:"#fffbeb",
+    type:"مقارنة",
+    q:"ما الفرق بين 'الوكالة' و'الفرع' كشكلين إداريين للبنوك الدولية؟",
+    opts:["لا فرق بينهما إطلاقاً","الوكالة ممنوعة من قبول ودائع الجمهور، بينما الفرع يقدّم نفس خدمات المركز الرئيسي",
+          "الفرع أصغر حجماً من الوكالة","الوكالة لها شخصية قانونية مستقلة بخلاف الفرع"],
+    ans:1,
+    exp:"الوكالات تشبه الفروع في كثير من الأعمال، لكنها ممنوعة من قبول الودائع من الجمهور. أما الفروع فتقدّم نفس الخدمات المصرفية للمراكز الرئيسية ولا تعدّ ذات شخصية قانونية مستقلة."
+  },
+  {
+    topic:"البنوك الدولية", color:"#b45309", bg:"#fffbeb",
+    type:"شرح",
+    q:"ما أحد الخصائص المميزة للقروض المصرفية الدولية مقارنةً بالقروض الرسمية؟",
+    opts:["تكون شروطها أيسر وأقل تشدداً","تمنح بالعملات المحلية فقط",
+          "سهولة الحصول عليها وسرعة منحها دون إجراءات طويلة","تخضع لرقابة البنك المركزي الدولي"],
+    ans:2,
+    exp:"من خصائص القروض المصرفية الدولية: سهولة الحصول عليها وسرعة منحها مقارنةً بالقروض الرسمية التي تخضع لإجراءات طويلة ومعقدة. غير أن شروطها عادةً أكثر صعوبةً وتشدداً."
+  },
+
+  // ── 4. الاستثمار الأجنبي المباشر ────────────────────────────
+  {
+    topic:"الاستثمار الأجنبي المباشر", color:"#15803d", bg:"#f0fdf4",
+    type:"تعريف",
+    q:"وفق تعريف منظمة الأونكتاد، ما الشرط الفاصل لاعتبار الاستثمار مباشراً؟",
+    opts:["امتلاك أي نسبة من أسهم الشركة مهما كانت صغيرة",
+          "ملكية حصة تساوي أو تفوق 10% من الأسهم العادية أو القوة التصويتية في الشركة التابعة",
+          "الاستثمار في قطاعي البترول والغاز فقط",
+          "وجود عقد مكتوب بين الطرفين مسجّل لدى الدولة المضيفة"],
+    ans:1,
+    exp:"وفق تعريف الأونكتاد والمعيار الذي وضعه IMF، الحدّ الفاصل لتعريف الاستثمار الأجنبي المباشر هو ملكية حصة تساوي أو تفوق 10% من الأسهم العادية أو القوة التصويتية في الشركة التابعة."
+  },
+  {
+    topic:"الاستثمار الأجنبي المباشر", color:"#15803d", bg:"#f0fdf4",
+    type:"أنواع",
+    q:"ما نوع الاستثمار الأجنبي المباشر الذي تسعى فيه الشركات متعددة الجنسية للاستفادة من الموارد الطبيعية والمواد الخام؟",
+    opts:["الاستثمار الباحث عن الأسواق","الاستثمار الباحث عن الكفاءة في الأداء",
+          "الاستثمار الباحث عن الثروات الطبيعية","الاستثمار الباحث عن أصول استراتيجية"],
+    ans:2,
+    exp:"الاستثمار الباحث عن الثروات الطبيعية يسعى للاستفادة من الموارد الطبيعية والمواد الخام في الدول النامية، وخاصةً في مجالات البترول والغاز والصناعات الاستخراجية."
+  },
+  {
+    topic:"الاستثمار الأجنبي المباشر", color:"#15803d", bg:"#f0fdf4",
+    type:"تحليل — آثار إيجابية",
+    q:"كيف يُسهم الاستثمار الأجنبي المباشر في سد فجوة النقد الأجنبي في الدول النامية؟",
+    opts:["بزيادة الضرائب الجمركية على الواردات","بتوفير الإيرادات من تصدير السلع الزراعية",
+          "بتوفير رأس المال الأجنبي اللازم لاستيراد الآلات والمعدات والخبرات الفنية دون إلزام بسداد ديون","برفع أسعار الصادرات"],
+    ans:2,
+    exp:"يُسهم الاستثمار الأجنبي المباشر في سد أربع فجوات: فجوة المدخرات، فجوة النقد الأجنبي (توفير العملة اللازمة لاستيراد الآلات والخبرات)، الفجوة التكنولوجية، وفجوة الإيرادات والنفقات العامة."
+  },
+  {
+    topic:"الاستثمار الأجنبي المباشر", color:"#15803d", bg:"#f0fdf4",
+    type:"تحليل — آثار سلبية",
+    q:"أيٌّ من التالي يُمثّل أثراً سلبياً محتملاً للاستثمارات الأجنبية المباشرة على الدول النامية؟",
+    opts:["نقل التكنولوجيا الحديثة وخلق فرص عمل جديدة",
+          "قد تُحوَّل أرباحها كلها أو معظمها إلى الخارج مما يؤثر سلباً على ميزان المدفوعات",
+          "خفض تكاليف الإنتاج المحلي","فتح أسواق تصديرية جديدة"],
+    ans:1,
+    exp:"من الآثار السلبية للاستثمار الأجنبي المباشر: تحويل الأرباح إلى الخارج مما يؤثر سلباً على موازين مدفوعات الدول النامية، وصعوبة توافق استراتيجية المستثمر الأجنبي مع أولويات التنمية، وخطر منافسة الصناعات المحلية."
+  },
+  {
+    topic:"الاستثمار الأجنبي المباشر", color:"#15803d", bg:"#f0fdf4",
+    type:"شرح",
+    q:"لماذا يُعدّ الاستثمار الأجنبي المباشر أكثر أماناً من الاقتراض الأجنبي قصير الأجل؟",
+    opts:["لأنه أسهل في الإلغاء عند الحاجة","لأنه يزيد من القدرة الإنتاجية للاقتصاد المضيف دون أن يُرتّب التزامات بسداد مبالغ محددة",
+          "لأن عوائده مضمونة من الحكومة","لأنه لا يخضع لأي رقابة"],
+    ans:1,
+    exp:"الاستثمار الأجنبي المباشر أكثر أماناً لأنه يُضيف قدرة إنتاجية حقيقية للاقتصاد، ولا يُرتّب مديونية أو التزامات بسداد مبالغ محددة في أوقات محددة كما هو الحال في الاقتراض قصير الأجل."
+  },
+
+  // ── 5. الاستثمار الأجنبي غير المباشر (المحفظي) ─────────────
+  {
+    topic:"الاستثمار المحفظي", color:"#0369a1", bg:"#f0f9ff",
+    type:"تعريف",
+    q:"ما التعريف الصحيح للاستثمار الأجنبي غير المباشر (المحفظي)؟",
+    opts:["استثمار يمنح المستثمر حق الرقابة الكاملة على إدارة الشركة",
+          "شراء أوراق مالية (أسهم وسندات) في دولة أخرى بهدف تحقيق عائد دون المشاركة في الإدارة",
+          "تأسيس مشروع صناعي مشترك بين دولتين","منح قروض حكومية طويلة الأجل"],
+    ans:1,
+    exp:"الاستثمار المحفظي (غير المباشر) يعني شراء أوراق مالية (أسهم وسندات) في دولة أخرى هدفه تحقيق عائد، دون أن يمنح المستثمر أي حق في الرقابة أو المشاركة في إدارة المشروع الاستثماري."
+  },
+  {
+    topic:"الاستثمار المحفظي", color:"#0369a1", bg:"#f0f9ff",
+    type:"مقارنة",
+    q:"ما الفرق الجوهري بين سوق الإصدار الأولية والسوق الثانوية في سياق الاستثمار المحفظي؟",
+    opts:["السوق الأولية للبيع والسوق الثانوية للشراء فقط",
+          "السوق الأولية هي سوق الإصدار الأول للأوراق المالية، والثانوية هي سوق تداولها لاحقاً",
+          "كلاهما مخصصان للمستثمرين الأجانب فقط","السوق الثانوية تشترط موافقة حكومية"],
+    ans:1,
+    exp:"السوق الأولية (سوق الإصدار) هي التي يتم فيها إصدار الأوراق المالية لأول مرة، بينما السوق الثانوية هي السوق التي تُتداول فيها الأوراق المالية بعد إصدارها الأول، وقد يكون شراء الأسهم والسندات في أيٍّ منهما."
+  },
+
+  // ── 6. سعر الصرف ────────────────────────────────────────────
+  {
+    topic:"سعر الصرف", color:"#be185d", bg:"#fdf2f8",
+    type:"تعريف",
+    q:"ما مضمون نظرية تعادل القدرة الشرائية في تفسير أسعار الصرف؟",
+    opts:["سعر الصرف يتحدد بحجم الاحتياطيات الذهبية",
+          "القيمة التوازنية للعملة تتحدد بالنسبة بين الأسعار المحلية والخارجية؛ أي ما تشتريه العملة داخلياً وخارجياً",
+          "سعر الصرف يتبع معدل الفائدة المحلي فقط","القيمة التوازنية تتحدد بناءً على قرار سياسي"],
+    ans:1,
+    exp:"تقوم نظرية تعادل القدرة الشرائية على مبدأ أن القيمة التوازنية للعملة تتحدد بالنسبة بين الأسعار المحلية والأسعار الخارجية، بمعنى أن تكلفة شراء سلعة ما يجب أن تكون متساوية في أي دولة."
+  },
+  {
+    topic:"سعر الصرف", color:"#be185d", bg:"#fdf2f8",
+    type:"تحليل",
+    q:"وفق نظرية الأرصدة، ماذا يحدث لقيمة عملة دولة تحقق فائضاً في ميزان مدفوعاتها؟",
+    opts:["تنخفض قيمة عملتها الخارجية","لا يتأثر سعر صرفها",
+          "ترتفع قيمة عملتها الخارجية نتيجة زيادة الطلب عليها","تضطر إلى تخفيض سعر الفائدة"],
+    ans:2,
+    exp:"وفق نظرية الأرصدة، إذا حقق ميزان المدفوعات فائضاً فذلك يعني زيادة الطلب على العملة الوطنية مما يؤدي إلى ارتفاع قيمتها الخارجية، ويحدث العكس عند حدوث العجز."
+  },
+  {
+    topic:"سعر الصرف", color:"#be185d", bg:"#fdf2f8",
+    type:"شرح",
+    q:"ما العلاقة بين التضخم المحلي وسعر صرف العملة في سوق الصرف؟",
+    opts:["التضخم المحلي يرفع قيمة العملة لزيادة الأسعار المحلية",
+          "لا علاقة بين التضخم وسعر الصرف","التضخم المحلي يؤدي إلى انخفاض قيمة العملة بزيادة الطلب على العملات الأجنبية",
+          "التضخم يرفع قيمة العملة مؤقتاً ثم تعود للانخفاض"],
+    ans:2,
+    exp:"التضخم المحلي يدفع المستهلكين لزيادة طلبهم على السلع الأجنبية وبالتالي على العملات الأجنبية، كما يُقلّل من استيراد الأجانب مما يُقلّل عرض العملة الأجنبية، فينتج عنه انخفاض قيمة العملة المحلية."
+  },
+  {
+    topic:"سعر الصرف", color:"#be185d", bg:"#fdf2f8",
+    type:"نقد",
+    q:"أيٌّ من التالي يُعدّ نقداً موجهاً لنظرية تعادل القدرة الشرائية؟",
+    opts:["أنها تُطبَّق في المدى القصير أكثر من المدى الطويل",
+          "أنها تفترض منافسة حرة وكاملة وغياب تكاليف النقل والرسوم الجمركية وهو غير واقعي",
+          "أنها لا تأخذ مستوى الأسعار بعين الاعتبار","أنها تنطبق على الدول المتقدمة فقط"],
+    ans:1,
+    exp:"من أبرز انتقادات نظرية تعادل القدرة الشرائية: تركّز على فرضيات غير واقعية كتوفر منافسة حرة وكاملة وعدم وجود تكاليف نقل وحقوق جمارك، كما أن بعض الدراسات أثبتت أن ثمة عوامل أخرى (كمعدلات الفائدة والأحداث السياسية) تتدخل في تحديد أسعار الصرف."
+  },
+
+  // ── 7. سوق الصرف الأجنبي ────────────────────────────────────
+  {
+    topic:"سوق الصرف", color:"#b45309", bg:"#fff7ed",
+    type:"تعريف",
+    q:"كيف يُعرَّف سوق الصرف الأجنبي؟",
+    opts:["سوق متخصص في بيع الذهب والمعادن النفيسة فقط",
+          "سوق نقدي عالمي يتم فيه مبادلة العملات بعضها ببعض باستمرار باستخدام وسائل الاتصال التقليدية والحديثة",
+          "سوق حكومي تشرف عليه البنوك المركزية الدولية","سوق لتداول الأسهم والسندات الدولية"],
+    ans:1,
+    exp:"سوق الصرف هو سوق نقدي ذو طابع عالمي يتم فيه مبادلة العملات بعضها ببعض دون توقف، وباستخدام وسائل الاتصال التقليدية والحديثة، ويعمل على مدار الساعة بسبب التباعد الجغرافي للمراكز المالية."
+  },
+  {
+    topic:"سوق الصرف", color:"#b45309", bg:"#fff7ed",
+    type:"تصنيف",
+    q:"أيٌّ من التالي يُعدّ من المتدخلين الرئيسيين في سوق الصرف؟",
+    opts:["منظمة التجارة العالمية","الأمم المتحدة",
+          "البنوك التجارية والمؤسسات المالية، والأفراد والمؤسسات، والبنوك المركزية، والسماسرة","شركات التأمين الدولية فقط"],
+    ans:2,
+    exp:"ينشط في سوق الصرف أربعة متدخلين رئيسيين: البنوك التجارية والمؤسسات المالية، الأفراد والمؤسسات، البنوك المركزية، والسماسرة (الوسطاء)."
+  },
+  {
+    topic:"سوق الصرف", color:"#b45309", bg:"#fff7ed",
+    type:"وظائف",
+    q:"ما وظيفة 'توفير تقنيات التحوط' في سوق الصرف؟",
+    opts:["زيادة العرض النقدي في الاقتصاد المحلي",
+          "إدارة مخاطر تقلبات سعر الصرف عبر أدوات مثل الخيارات وعقود المبادلة والمستقبليات",
+          "تحديد سعر الصرف الرسمي للدول","تمويل عجز الموازنة الحكومية"],
+    ans:1,
+    exp:"بعد انهيار نظام بريتون وودز، نتجت تقلبات في سعر الصرف خلقت مخاطر مالية. لذا ابتكر سوق الصرف تقنيات التحوط كالخيارات وعقود المبادلة والمستقبليات والعقود الآجلة لإدارة هذه المخاطر."
+  },
+  {
+    topic:"سوق الصرف", color:"#b45309", bg:"#fff7ed",
+    type:"خصائص",
+    q:"لماذا يهيمن الدولار الأمريكي على معاملات سوق الصرف الدولي؟",
+    opts:["لأنه العملة الأقدم تاريخياً في العالم",
+          "بسبب حجم الاقتصاد الأمريكي وإرث نظام بريتون وودز وعمق سوق المال الأمريكي وسيولته",
+          "لأن الأمم المتحدة فرضت استخدامه","لأنه مرتبط بالذهب الأمريكي"],
+    ans:1,
+    exp:"يهيمن الدولار الأمريكي على سوق الصرف بسبب: حجم الاقتصاد الأمريكي، الإرث التاريخي لنظام بريتون وودز، عمق واتساع وسيولة سوق المال الأمريكي التي لا مثيل لها، وحجم أدوات الدين الأمريكي."
+  },
+  {
+    topic:"سوق الصرف", color:"#b45309", bg:"#fff7ed",
+    type:"شرح",
+    q:"ما المقصود بـ'التحوط' كعملية في سوق الصرف؟",
+    opts:["المضاربة على ارتفاع أسعار الصرف لتعظيم الأرباح",
+          "اتخاذ مركز معاكس للمركز الأصلي بالعملة الأجنبية لتثبيت القيمة وتحييد مخاطر تقلبات الصرف",
+          "شراء كميات كبيرة من العملات الأجنبية للاحتفاظ بها","تحديد سعر الصرف من قبل البنك المركزي"],
+    ans:1,
+    exp:"التحوط يعني اتخاذ مركزين مختلفين بحيث تُعوَّض خسائر أحدهما بأرباح الآخر، أي اتخاذ مركز معاكس للمركز الأصلي بالعملة المسبّبة للخطر، مما يُثبّت قيمة العملة المحلية بغض النظر عن تقلبات الصرف."
+  },
+
+  // ── 8. المخاطر السياسية ─────────────────────────────────────
+  {
+    topic:"المخاطر السياسية", color:"#c2410c", bg:"#fff7ed",
+    type:"تعريف",
+    q:"كيف تُعرَّف المخاطر السياسية في مجال الاستثمار الدولي؟",
+    opts:["مخاطر تقلبات أسعار الصرف بين الدول",
+          "المخاطر التي يتعرض لها المستثمرون الدوليون من ممارسة أعمال تجارية تحت ولاية حكومة أجنبية ونظامها القانوني",
+          "مخاطر انهيار البورصات الدولية","مخاطر التضخم وارتفاع الأسعار"],
+    ans:1,
+    exp:"المخاطر السياسية (Political Risk) مصطلح يُستخدم لوصف مختلف المخاطر التي تنشأ من ممارسة الأعمال التجارية تحت ولاية حكومة أجنبية، وتتراوح من مخاطر محدودة التأثير إلى استيلاء الحكومة كلياً على الاستثمار."
+  },
+  {
+    topic:"المخاطر السياسية", color:"#c2410c", bg:"#fff7ed",
+    type:"أنواع",
+    q:"ما الشكل السياسي الأكثر خطورة في مجال الاستثمار الدولي المباشر وفق المادة؟",
+    opts:["تغيير ضريبة الدخل","تعديل قوانين العمل",
+          "المصادرة (Expropriation): استحواذ الحكومة على ملكية الاستثمار لأغراضها","رفع التعريفة الجمركية"],
+    ans:2,
+    exp:"المصادرة (Expropriation) هي الشكل السياسي الأكثر خطورة، وتحدث عندما تستحوذ الحكومة على ملكية الاستثمار لأغراضها الخاصة أو توزّعها على المستثمرين المحليين، كالاستيلاء على النفط والثروات المعدنية."
+  },
+  {
+    topic:"المخاطر السياسية", color:"#c2410c", bg:"#fff7ed",
+    type:"شرح",
+    q:"كيف تُؤثّر غياب الشفافية والتنظيم في دولة ما على الاستثمارات الدولية فيها؟",
+    opts:["تجعل الاستثمار أكثر ربحية لانعدام الرقابة",
+          "يُصعّب الحصول على معلومات كافية وموثوقة مما يجعل الاستثمار في جوهره أكثر خطورة",
+          "تُشجع الاستثمارات الأجنبية بتقليل الأعباء البيروقراطية","لا تأثير لها على قرار الاستثمار"],
+    ans:1,
+    exp:"غياب متطلبات الإفصاح والشفافية في بعض الدول يجعل الحصول على معلومات كافية وموثوقة أمراً متعذراً، مما يزيد من درجة مخاطرة الاستثمار جوهرياً، خلافاً للأسواق التي تلتزم بمتطلبات الإفصاح مثل بورصات الولايات المتحدة."
+  },
+  {
+    topic:"المخاطر السياسية", color:"#c2410c", bg:"#fff7ed",
+    type:"تحليل",
+    q:"لماذا قد تُؤثّر تغييرات المعاهدات والاتفاقيات الدولية سلباً على الاستثمارات الخاصة؟",
+    opts:["لأن تغيير المعاهدة يلغي حق التقاضي","لأن تغيير الاتفاقيات يُغيّر أسعار صرف العملة",
+          "لأن التغييرات في المعاهدات (مثل معاهدات الكربون) تُؤثر مباشرةً على تكاليف الأعمال ودخل المستثمرين","لأن المعاهدات الجديدة ترفع الضرائب دائماً"],
+    ans:2,
+    exp:"تنشأ المعاهدات لتشجيع الاستثمار، لكن تغييرها يؤثر سلباً؛ مثلاً معاهدات الحد من الكربون تؤثر مباشرةً على تكلفة أنواع واسعة من الأعمال التجارية بدخل قليل نسبياً للمستثمرين."
+  },
+
+  // ── 9. الأزمات المالية ──────────────────────────────────────
+  {
+    topic:"الأزمات المالية", color:"#991b1b", bg:"#fff1f1",
+    type:"تعريف",
+    q:"أيٌّ من التعريفات التالية يُعبّر بدقة عن مفهوم 'الأزمة المالية'؟",
+    opts:["حالة من الازدهار الاقتصادي المفاجئ في الأسواق","ارتفاع سريع في معدلات النمو الاقتصادي",
+          "حدوث اضطراب حاد ومفاجئ في التوازنات الاقتصادية يتبعه انهيار في المؤسسات المالية وامتداد آثاره للقطاعات الأخرى",
+          "انخفاض معدل التضخم بشكل سريع"],
+    ans:2,
+    exp:"من تعريفات الأزمة المالية: فترة تشهد اضطراباً حاداً ومفاجئاً في التوازنات الاقتصادية يتبعه انهيار في عدد من المؤسسات المالية تمتد آثاره إلى القطاعات الأخرى، وتتسم بالعنف والمفاجأة ونقص المعلومات."
+  },
+  {
+    topic:"الأزمات المالية", color:"#991b1b", bg:"#fff1f1",
+    type:"أنواع",
+    q:"متى تحدث 'الأزمة المصرفية'؟",
+    opts:["عندما ترتفع أسعار الفائدة بشكل حاد",
+          "عندما يواجه بنك زيادة مفاجئة في طلب سحب الودائع ولا يستطيع تغطيتها فتنتشر أزمة السيولة إلى بنوك أخرى",
+          "عندما تنهار أسواق الأسهم الدولية","عندما تخفّض الدولة قيمة عملتها"],
+    ans:1,
+    exp:"الأزمة المصرفية تظهر عندما يواجه بنك زيادة كبيرة ومفاجئة في طلب سحب الودائع ولا يستطيع تغطيتها، فتنشأ أزمة سيولة وتنتشر إلى بنوك أخرى. وإذا رفض البنك منح قروض خوفاً من عدم الوفاء فتُسمى أزمة ائتمان."
+  },
+  {
+    topic:"الأزمات المالية", color:"#991b1b", bg:"#fff1f1",
+    type:"نظريات",
+    q:"ما المقصود بـ'نظرية الأحمق الأكبر' في تفسير الأزمات المالية؟",
+    opts:["نظرية تُفسّر الأزمة بضعف كفاءة الإدارة المصرفية",
+          "نظرية تصف سلوك المضاربين الذين يشترون أصولاً بأسعار مبالغ فيها على أمل بيعها لمضاربين آخرين بأسعار أعلى، وتنتهي الفقاعة عند آخر مشترٍ",
+          "نظرية تُحمّل الحكومات المسؤولية الكاملة عن الأزمات","نظرية تُفسّر الأزمة بعجز ميزان المدفوعات"],
+    ans:1,
+    exp:"نظرية الأحمق الأكبر: يشتري المضاربون أصولاً بأسعار أعلى من قيمتها الحقيقية لاعتقادهم أنهم سيبيعونها لمضاربين آخرين (حمقى) بأسعار مرتفعة. تستمر الفقاعة حتى يظهر آخر مشترٍ (الأحمق الأكبر) الذي لن يجد من يشتري منه."
+  },
+  {
+    topic:"الأزمات المالية", color:"#991b1b", bg:"#fff1f1",
+    type:"نظريات",
+    q:"وفق نظرية القطيع، ما السلوك المميّز للمستثمرين في أوقات الأزمات؟",
+    opts:["يتصرف كل مستثمر باستقلالية كاملة بناءً على تحليله الخاص",
+          "يميل المستثمرون للشراء والبيع في اتجاه السوق، والمستثمر المحلي هو أول من يهرب لامتلاكه معلومات أكثر",
+          "يتجنب المستثمرون البيع في أوقات الأزمات لحماية استثماراتهم","يُسيطر المستثمرون الأجانب على مسار السوق"],
+    ans:1,
+    exp:"نظرية القطيع تقوم على ميل المستثمرين للشراء والبيع في اتجاه السوق. والمستثمر المحلي هو أول من يهرب لامتلاكه معلومات أكثر، بينما يتبعه المستثمر الأجنبي؛ مما يعني أن المستثمرين الأجانب أكثر عرضة لسلوك القطيع."
+  },
+  {
+    topic:"الأزمات المالية", color:"#991b1b", bg:"#fff1f1",
+    type:"أسباب",
+    q:"كيف تُسهم أسعار الصرف الثابتة في تهيئة بيئة ملائمة للأزمات المالية؟",
+    opts:["تُثبّط الصادرات وتُشجع الاستيراد","تمنع البنوك المركزية من التدخل",
+          "تُشجع المقترضين على تجاهل مخاطر سعر الصرف مما يُراكم قروضاً بالعملات الأجنبية ويُعرّض الاقتصاد للصدمات",
+          "ترفع تكاليف الإنتاج المحلي"],
+    ans:2,
+    exp:"أسعار الصرف الثابتة تُشجع على الاقتراض الأجنبي بسبب تجاهل المقترضين لمخاطر سعر الصرف، فيتراكم الاقتراض بالعملات الأجنبية مما يُعرّض الاقتصاد لمخاطر الصدمات الداخلية والخارجية ومن ثم لمخاطر الأزمات."
+  },
+  {
+    topic:"الأزمات المالية", color:"#991b1b", bg:"#fff1f1",
+    type:"نظريات",
+    q:"ما الفارق بين 'نظرية انفجار الفقاعة' و'نظرية الدورة الاقتصادية' في تفسير الأزمات؟",
+    opts:["لا فارق بينهما؛ كلتاهما تفسران بنفس الآلية",
+          "نظرية الفقاعة تفسّر الأزمة بالارتفاع المبالغ فيه لأسعار الأصول وانهيارها، بينما نظرية الدورة تعتمد على التوسع في التمويل خلال مراحل النمو وتراكم الديون حتى الانهيار",
+          "نظرية الدورة تُطبَّق على الدول النامية فقط","نظرية الفقاعة خاصة بالبورصات فقط"],
+    ans:1,
+    exp:"نظرية انفجار الفقاعة: ارتفاع غير مبرر لأسعار الأصول ثم انهيارها فجأة. نظرية الدورة الاقتصادية: الشركات تتوسع في التمويل خلال مراحل النمو متجاهلةً الحذر، فتتراكم الديون حتى يُصيب الاقتصادَ الكسادُ والأزمة."
+  },
+  {
+    topic:"الأزمات المالية", color:"#991b1b", bg:"#fff1f1",
+    type:"أسباب",
+    q:"ما دور 'عدم استقرار الاقتصاد الكلي' في اندلاع الأزمات المالية؟",
+    opts:["يُقلّل من معدلات الادخار المحلي فقط",
+          "التقلبات في أسعار الفائدة وأسعار الصرف والسياسات التوسعية تُنعش الاقتصاد بشكل خطير وتُراكم الديون مما يُمهّد للأزمة",
+          "يُحدّ من النمو الاقتصادي دون أن يُسبّب أزمات","يرفع معدلات التوظيف بشكل مؤقت فقط"],
+    ans:1,
+    exp:"التقلبات في أسعار الفائدة العالمية وأسعار الصرف تُعدّ من أهم مصادر الأزمات. فالسياسات التوسعية قد تُنعش الاقتصاد بشكل خطير وتُراكم الديون والاستثمار المفرط في العقارات، فيما تؤدي السياسات الانكماشية إلى صعوبة خدمة الديون وتهديد البنوك بالإفلاس."
+  },
+
+  // ── 10. أسواق الأسهم الدولية ────────────────────────────────
+  {
+    topic:"أسواق الأسهم الدولية", color:"#4f46e5", bg:"#eef2ff",
+    type:"تعريف",
+    q:"ما المقصود بـ'إيصالات الإيداع الأمريكية' (ADR) كطريقة لإصدار الأسهم الدولية؟",
+    opts:["أسهم أمريكية تُصدَر في البورصات الأوروبية",
+          "شهادات تُتداول في الأسواق الأمريكية وتمثل عدداً محدداً من أسهم شركة أجنبية، ابتُكرت لتجاوز عقبات شراء الأسهم الأجنبية",
+          "وثائق حكومية لإثبات ملكية الذهب","سندات دين تُصدرها الحكومات الأجنبية في السوق الأمريكي"],
+    ans:1,
+    exp:"إيصالات الإيداع الأمريكية (ADRs) هي شهادات تُتداول في الأسواق الأمريكية وتمثل عدداً محدداً من أسهم شركة أجنبية، وقد ابتُكرت عام 1938م كآلية للتخلص من عقبات شراء الأسهم الأجنبية وتبادلها بعملات مختلفة في نفس السوق."
+  },
+  {
+    topic:"أسواق الأسهم الدولية", color:"#4f46e5", bg:"#eef2ff",
+    type:"إيجابيات",
+    q:"ما الفائدة الرئيسية التي يُحقّقها إصدار الأسهم الدولية بالنسبة للمستثمر؟",
+    opts:["ضمان الحصول على عوائد ثابتة بغض النظر عن أداء الشركة",
+          "توفير فرصة التنويع لتقليل المخاطر ورفع العوائد والاستفادة من المعاملة التفضيلية في مجال الضرائب",
+          "احتكار حق التصويت في قرارات الشركة","الحصول على حق الشراء المسبق لأي إصدار جديد"],
+    ans:1,
+    exp:"بالنسبة للمستثمر: الأسهم الدولية توفر فرصة التنويع بالشكل الذي يُقلّل من المخاطر ويرفع من العوائد، كما تُتيح الاستفادة من المعاملة التفضيلية في مجال الضرائب."
+  },
+  {
+    topic:"أسواق الأسهم الدولية", color:"#4f46e5", bg:"#eef2ff",
+    type:"سلبيات",
+    q:"لماذا تميل الشركات إلى جعل نسبة الأسهم المطروحة دولياً صغيرة؟",
+    opts:["لتجنّب دفع الأرباح لمساهمين كثيرين",
+          "لأن امتلاك 10% أو أكثر يُعتبر استثماراً مباشراً يُعطي حق التدخل في قرارات الشركة، فتحرص على ألا يسيطر المساهمون الجدد على سلطة القرار",
+          "لأن البورصات الدولية ترفض الإصدارات الكبيرة","لأن الأسهم الدولية الكثيرة تنخفض قيمتها تلقائياً"],
+    ans:1,
+    exp:"إصدار الأسهم الدولية يعني إتاحة المشاركة في أموال الشركة لأجانب، وامتلاك 10% أو أكثر يُعتبر استثماراً أجنبياً مباشراً يُعطي حق التدخل في القرارات، لذا تُبقي الشركات النسبة المطروحة صغيرة للحفاظ على سيطرتها على القرار."
+  },
+
+  // ── أسئلة شاملة ومتنوعة إضافية ────────────────────────────
+  {
+    topic:"مفهوم التمويل الدولي", color:"#1e6fbf", bg:"#eef5fb",
+    type:"تصنيف",
+    q:"تنقسم أهمية التمويل الدولي إلى ثلاث مجموعات رئيسية. أيٌّ من التالي يندرج تحتها؟",
+    opts:["الحسابات التجارية، والتدفقات الرأسمالية، والالتزامات السياسية كالتعويضات",
+          "الصادرات الصناعية، والواردات الزراعية، والخدمات فقط",
+          "الميزانية العامة، والدين العام، والسياسة النقدية","القروض المحلية، والضرائب، والرسوم الجمركية"],
+    ans:0,
+    exp:"تنقسم العلاقات المالية الدولية إلى: 1) حسابات المبادلات التجارية (صادرات/استيرادات)، 2) التدفقات الدولية لرؤوس الأموال بأشكالها المختلفة، 3) الالتزامات المالية المترتبة على الأوضاع السياسية كالتعويضات عند الحرب."
+  },
+  {
+    topic:"ميزان المدفوعات", color:"#7c3aed", bg:"#f5f0ff",
+    type:"تطبيق",
+    q:"إذا أنشأ العراق مصفاة نفط في سوريا بتكلفة 12 مليون دولار، كيف تُسجَّل هذه العملية في ميزان المدفوعات العراقي؟",
+    opts:["كفقرة دائن في الحساب الجاري","كفقرة مدين في حساب رأس المال وفقرة دائن في ميزان النقد الأجنبي",
+          "كفقرة دائن في حساب التحويلات من طرف واحد","لا تُسجَّل لأنها عملية خارج العراق"],
+    ans:1,
+    exp:"وفق المثال التوضيحي بالملزمة، بناء المصفاة في سوريا يُسجَّل كفقرة مدين (-) في حساب رأس المال العراقي (تدفقات رأسمالية للخارج)، وكفقرة دائن (+) في ميزان النقد الأجنبي نتيجة انخفاض رصيد العراق من العملات الأجنبية."
+  },
+  {
+    topic:"مصادر التمويل الدولي", color:"#0d7a5f", bg:"#edfaf5",
+    type:"شرح",
+    q:"ما الهدف الأساسي لأهمية التمويل الدولي بالنسبة للدول المانحة؟",
+    opts:["فرض هيمنتها السياسية على الدول المتلقية",
+          "تحسين صورتها أمام المجتمع الدولي والتخلص من فوائض سلعها عبر القروض والمساعدات",
+          "رفع أسعار صادراتها الصناعية","احتكار الأسواق في الدول النامية"],
+    ans:1,
+    exp:"من أهمية التمويل الدولي للدول المانحة: تحسين صورتها أمام المجتمع الدولي وإظهارها كدولة تحارب الفقر، وحماية قطاعاتها الإنتاجية بالتخلص من فوائضها السلعية عبر القروض والمساعدات."
+  },
+  {
+    topic:"الاستثمار الأجنبي المباشر", color:"#15803d", bg:"#f0fdf4",
+    type:"مقارنة",
+    q:"ما الفرق الجوهري بين الاستثمار الباحث عن الأسواق والاستثمار الباحث عن الكفاءة في الأداء؟",
+    opts:["لا فارق، كلاهما يهدف إلى نفس الغرض",
+          "الباحث عن الأسواق يُعوّض التصدير بإنشاء إنتاج محلي في البلد المضيف، بينما الباحث عن الكفاءة يُحوّل أنشطة كثيفة العمالة إلى دول ذات تكاليف أقل",
+          "الباحث عن الكفاءة يختص بالبلدان المتقدمة فقط","الباحث عن الأسواق يهدف لخفض تكاليف الإنتاج فقط"],
+    ans:1,
+    exp:"الاستثمار الباحث عن الأسواق يقوم في البلد المضيف بديلاً عن التصدير إليه، بسبب القيود المفروضة أو ارتفاع تكاليف النقل. أما الباحث عن الكفاءة فتُحوّل فيه الشركات أنشطتها كثيفة العمالة إلى دول ذات أجور وتكاليف أقل."
+  },
+  {
+    topic:"الأزمات المالية", color:"#991b1b", bg:"#fff1f1",
+    type:"شرح",
+    q:"ما المقصود بـ'الأزمات التوام' في سياق الأزمات المالية؟",
+    opts:["أزمة تضرب دولتين متجاورتين في نفس الوقت",
+          "أزمة تجمع انهيار أسعار الأوراق المالية وإفلاسات البنوك مع انهيار قيمة العملة في آنٍ واحد",
+          "أزمة ناتجة عن قرارين حكوميين خاطئين","أزمة مزدوجة بين التضخم والبطالة"],
+    ans:1,
+    exp:"الأزمات التوام (Twin Crises) هي تلك التي تجمع بين شكلين: انهيار أسعار وعوائد الأوراق المالية وإفلاسات وفشل البنوك (أزمة مصرفية)، مع انهيار قيمة العملة (أزمة عملة)، وتُفسَّر بنظريات الفقاعات وأثر العدوى والأحمق الأكبر."
+  },
+  {
+    topic:"سوق الصرف", color:"#b45309", bg:"#fff7ed",
+    type:"تحليل",
+    q:"ما دور البنك المركزي في سوق الصرف في ظل نظام أسعار الصرف الثابتة؟",
+    opts:["لا يتدخل في سوق الصرف إطلاقاً","يتدخل باستمرار كلما حاد سعر الصرف عن السعر الثابت باستخدام أداة السوق المفتوح",
+          "يضع سعراً ثابتاً ويتركه دون مراقبة","يبيع الدولار فقط ولا يشتري"],
+    ans:1,
+    exp:"في أنظمة الصرف الثابتة، يكون تدخل البنك المركزي في سوق الصرف أمراً ثابتاً وضرورياً كلما حاد سعر الصرف عن السعر الثابت، ويستخدم أداة السوق المفتوح للتأثير على العرض والطلب وإعادة التوازن."
+  },
+  {
+    topic:"مفهوم التمويل الدولي", color:"#1e6fbf", bg:"#eef5fb",
+    type:"ترتيب تاريخي",
+    q:"متى أصبح مصطلح 'الدولي' (International) في التمويل الدولي شائع الاستخدام؟",
+    opts:["منذ القرن الثامن عشر مع الثورة الصناعية",
+          "بعد الحرب العالمية الثانية مع نشأة النظام الدولي الجديد ومؤسساته كصندوق النقد والبنك الدوليين",
+          "منذ تأسيس منظمة التجارة العالمية في التسعينيات","في مطلع الألفية الثالثة مع العولمة الرقمية"],
+    ans:1,
+    exp:"وفق المادة، شاع مصطلح 'Finance' منذ العقد الأول من القرن العشرين، بينما شاع مصطلح 'International' بعد الحرب العالمية الثانية حيث نشأ النظام الدولي الجديد وتأسست المؤسسات الدولية كصندوق النقد والبنك الدوليين."
+  },
+  {
+    topic:"أسواق الأسهم الدولية", color:"#4f46e5", bg:"#eef2ff",
+    type:"تعريف",
+    q:"ما تعريف 'أزمة العملة' أو 'أزمة ميزان المدفوعات'؟",
+    opts:["نقص حاد في الاحتياطيات الذهبية للدولة",
+          "تغيّر بالغ في أسعار الصرف يُؤثّر على قدرة العملة على أداء وظيفتها، وقد تلجأ له السلطات النقدية بسبب المضاربات",
+          "ارتفاع حاد في معدلات التضخم","انهيار أسعار الأسهم في البورصات المحلية فقط"],
+    ans:1,
+    exp:"أزمة العملة (أزمة ميزان المدفوعات) تحدث عندما تتغير أسعار الصرف بصورة بالغة بشكل يؤثر على قدرة العملة على أداء مهمتها كوسيط تبادل أو مخزن للقيمة، وغالباً تحدث عندما تخفّض السلطات النقدية قيمة عملتها بسبب المضاربات."
+  },
+  {
+    topic:"البنوك الدولية", color:"#b45309", bg:"#fffbeb",
+    type:"تعريف",
+    q:"ما الذي يميّز 'الشركات التابعة' عن 'الفروع' كشكل إداري للبنوك الدولية؟",
+    opts:["الشركات التابعة أقل استقلالاً من الفروع","الشركات التابعة ذات شخصية قانونية مستقلة برأس مالها الخاص، يمكنها الاستمرار أو الإغلاق دون التأثير على الشركة الأم",
+          "الفروع أكبر حجماً من الشركات التابعة دائماً","لا فارق إداري بينهما"],
+    ans:1,
+    exp:"الشركات التابعة ذات شخصية قانونية مستقلة لأن لها رأس مالها الخاص، فلا تتأثر بإفلاس الشركة الأم، ولا تؤثر عليها إذا أغلقت. وغالباً تُفضَّل على الفروع إذا لم تسمح قوانين البلد الأجنبي بفتح فروع لبنوك أجنبية."
+  },
+  {
+    topic:"الاستثمار المحفظي", color:"#0369a1", bg:"#f0f9ff",
+    type:"تحليل",
+    q:"لماذا لا يمنح الاستثمار غير المباشر (المحفظي) المستثمر حق الرقابة على الشركة؟",
+    opts:["لأن المستثمر يحتفظ بأسهمه بشكل سري","لأن دوره يقتصر على تقديم رأس المال لجهة معينة دون أي نوع من الرقابة أو المشاركة في تنظيم إدارة المشروع",
+          "لأن القانون الدولي يحظر التدخل الأجنبي في قرارات الشركات","لأن الأسهم المشتراة قليلة العدد دائماً"],
+    ans:1,
+    exp:"معيار الاستثمار غير المباشر (المحفظي) أن المستثمر يقتصر دوره على تقديم رأس المال لجهة معينة تقوم بالاستثمار، دون أن يكون له أي نوع من الرقابة أو المشاركة في تنظيم إدارة المشروع الاستثماري. هدفه جني الأرباح فقط."
+  }
+];
+
+// ══════════════════════════════════════════════════════════════
+//  QUIZ SETTINGS
+const QUIZ_SIZE = 15; // number of questions per session
+
+// ══════════════════════════════════════════════════════════════
+//  STATE
+let questions = [], current = 0, score = 0, answered = false, log = [];
+
+function shuffle(a){ const b=[...a]; for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; }
+
+function startQuiz(){
+  questions = shuffle(BANK).slice(0, QUIZ_SIZE);
+  current=0; score=0; answered=false; log=[];
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('resultsCard').classList.remove('show');
+  document.getElementById('progWrap').style.display='block';
+  document.getElementById('quizCard').style.display='block';
+  renderQ();
+}
+
+function renderQ(){
+  answered=false;
+  const q=questions[current], tot=questions.length;
+  const pct=Math.round((current/tot)*100);
+  document.getElementById('progLbl').textContent=`السؤال ${current+1} من ${tot}`;
+  document.getElementById('progPct').textContent=`${pct}%`;
+  document.getElementById('progFill').style.width=pct+'%';
+
+  document.getElementById('qTypeLbl').textContent=q.type;
+  const badge=document.getElementById('topicBadge');
+  badge.textContent=q.topic;
+  badge.style.background=q.bg;
+  badge.style.color=q.color;
+  badge.style.border=`1.5px solid ${q.color}40`;
+
+  document.getElementById('qText').textContent=q.q;
+
+  const letters=['أ','ب','ج','د'];
+  const c=document.getElementById('opts'); c.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const d=document.createElement('div');
+    d.className='option';
+    d.innerHTML=`<span class="letter">${letters[i]}</span><span>${o}</span>`;
+    d.addEventListener('click',()=>pick(i,d));
+    c.appendChild(d);
+  });
+
+  const fb=document.getElementById('feedback');
+  fb.className='feedback'; fb.textContent='';
+  const btn=document.getElementById('btnNext');
+  btn.classList.remove('show');
+  btn.textContent=current===questions.length-1?'عرض النتيجة 🏆':'التالي ←';
+
+  const card=document.getElementById('quizCard');
+  card.style.animation='none';
+  requestAnimationFrame(()=>{ card.style.animation=''; });
+}
+
+function pick(idx,el){
+  if(answered)return;
+  answered=true;
+  const q=questions[current];
+  document.querySelectorAll('.option').forEach(o=>o.classList.add('disabled'));
+  const ok=idx===q.ans;
+  if(ok)score++;
+  el.classList.add(ok?'correct':'wrong');
+  if(!ok) document.querySelectorAll('.option')[q.ans].classList.add('correct');
+  const fb=document.getElementById('feedback');
+  fb.className=`feedback ${ok?'correct':'wrong'} show`;
+  fb.innerHTML=ok?`✅ <strong>إجابة صحيحة!</strong> ${q.exp}`:`❌ <strong>إجابة خاطئة.</strong> ${q.exp}`;
+  log.push({qi:current,chosen:idx,ok});
+  document.getElementById('btnNext').classList.add('show');
+}
+
+function nextQ(){
+  current++;
+  if(current<questions.length){ renderQ(); }
+  else showResults();
+}
+
+function showResults(){
+  document.getElementById('quizCard').style.display='none';
+  document.getElementById('progWrap').style.display='none';
+
+  const tot=questions.length, pct=Math.round((score/tot)*100);
+  const grade=getGrade(pct);
+
+  document.getElementById('sNum').textContent=score;
+  document.getElementById('sDen').textContent=`من ${tot}`;
+  const circ=2*Math.PI*58; // 364.4
+  const arc=document.getElementById('arc');
+  arc.style.stroke=grade.color;
+  setTimeout(()=>{ arc.style.transition='stroke-dashoffset 1.2s ease'; arc.style.strokeDashoffset=circ-(pct/100)*circ; },100);
+  document.getElementById('gradeLbl').textContent=grade.label;
+  document.getElementById('gradeLbl').style.color=grade.color;
+  document.getElementById('gradeMsg').textContent=grade.msg;
+
+  document.getElementById('stC').textContent=score;
+  document.getElementById('stW').textContent=tot-score;
+  document.getElementById('stP').textContent=pct+'%';
+
+  const revList=document.getElementById('revList');
+  revList.innerHTML='';
+  const letters=['أ','ب','ج','د'];
+  log.forEach(ua=>{
+    const q=questions[ua.qi];
+    const d=document.createElement('div');
+    d.className=`rev-item ${ua.ok?'rc':'rw'}`;
+    d.innerHTML=`
+      <span class="topic-tag" style="background:${q.bg};color:${q.color};border:1px solid ${q.color}40">${q.topic}</span>
+      <div class="rq">${ua.ok?'✅':'❌'} ${q.q}</div>
+      <div class="ra">إجابتك: <span>${q.opts[ua.chosen]}</span></div>
+      ${!ua.ok?`<div class="ra">الصحيحة: <span style="color:var(--green)">${q.opts[q.ans]}</span></div>`:''}
+    `;
+    revList.appendChild(d);
+  });
+
+  document.getElementById('resultsCard').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function getGrade(p){
+  if(p===100) return {label:'🏆 ممتاز مطلق',  msg:'أداء استثنائي! أتقنت المادة كاملاً.',            color:'#b45309'};
+  if(p>=85)   return {label:'🥇 امتياز',        msg:'رائع جداً! إلمام قوي بجميع المحاور.',             color:'#15803d'};
+  if(p>=70)   return {label:'🥈 جيد جداً',      msg:'أداء متميز. راجع النقاط التي أخطأت فيها.',       color:'#1e6fbf'};
+  if(p>=55)   return {label:'🥉 جيد',           msg:'أداء مقبول. يُنصح بمراجعة بعض المحاور.',         color:'#7c3aed'};
+  if(p>=40)   return {label:'📖 مقبول',         msg:'تحتاج مراجعة إضافية لعدة مفاهيم.',               color:'#c2410c'};
+  return             {label:'📚 بحاجة للمراجعة',msg:'يُنصح بمراجعة المادة الدراسية كاملاً وإعادة الاختبار.',color:'#991b1b'};
+}
+
+function retryQuiz(){
+  document.getElementById('resultsCard').classList.remove('show');
+  document.getElementById('arc').style.transition='';
+  document.getElementById('arc').style.strokeDashoffset='364.4';
+  startQuiz();
+}
+</script>
 </body>
 </html>
