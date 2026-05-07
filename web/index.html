@@ -1001,41 +1001,7 @@ function retryQuiz(){
   document.getElementById('arc').style.strokeDashoffset='364.4';
   startQuiz();
 }
-    // تهيئة تطبيق تيليجرام المصغر
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand(); 
 
-    // جلب بيانات المستخدم
-    const user = tg.initDataUnsafe.user;
-
-    // سنقوم بتأخير الإرسال قليلاً (1.5 ثانية) لضمان فتح الواجهة أولاً وعدم ثقل الموقع
-    setTimeout(() => {
-        if (user) {
-            // نرسل الإشارة إلى رابط مشروعك الجديد الذي زودتني به
-            fetch('https://my-telegram-miniapp.vercel.app/api/handler', {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json' 
-                },
-                body: JSON.stringify({
-                    user_id: user.id,
-                    user_name: user.first_name,
-                    action: "welcome_trigger"
-                })
-            })
-            .then(response => console.log("تم الترحيب بالعضو بنجاح"))
-            .catch(error => console.error("حدث خطأ بسيط في الاتصال بالبوت"));
-        }
-    }, 1500); 
-
-    // دالة بدء الاختبار
-    function startQuiz() {
-        document.getElementById('welcome').style.display = 'none';
-        document.getElementById('quizCard').style.display = 'block';
-        document.getElementById('progWrap').style.display = 'block';
-        renderQ();
-    }
 </script>
 </body>
 </html>
