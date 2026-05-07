@@ -1001,6 +1001,28 @@ function retryQuiz(){
   document.getElementById('arc').style.strokeDashoffset='364.4';
   startQuiz();
 }
+    // تهيئة تطبيق تيليجرام المصغر
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand(); 
+
+    // جلب بيانات المستخدم
+    const user = tg.initDataUnsafe.user;
+    if (user) {
+        // سيقوم التطبيق بإرسال بيانات المستخدم آلياً للبوت عند الدخول
+        fetch('https://tiny-tune-bot-khaki.vercel.app/api/handler', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: user.id,
+                user_name: user.first_name,
+                action: "welcome_trigger",
+                app_url: "http://t.me/TinyTuneBot/visuals"
+            })
+        })
+        .then(response => console.log("تم التواصل مع البوت بنجاح"))
+        .catch(error => console.error("عذراً، فشل إرسال إشارة الترحيب:", error));
+    }
 </script>
 </body>
 </html>
